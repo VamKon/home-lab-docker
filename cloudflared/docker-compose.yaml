@@ -1,0 +1,17 @@
+version: "3.3"
+networks:
+  cloudflared_network:
+    external: true
+    name: cloudflared_network
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    networks:
+      cloudflared_network:
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
